@@ -2,4 +2,29 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Common -->
+    <dimen name="mp.divider.line">1px</dimen>
+    <dimen name="mp.divider.small">4dp</dimen>
+    <dimen name="mp.divider.normal">8dp</dimen>
+    <dimen name="mp.divider.large">16dp</dimen>
+    <dimen name="mp.divider.xlarge">24dp</dimen>
+
+
+    <dimen name="mp.padding.small">4dp</dimen>
+    <dimen name="mp.padding.normal">8dp</dimen>
+    <dimen name="mp.padding.large">16dp</dimen>
+    <dimen name="mp.padding.xlarge">24dp</dimen>
+
+    <dimen name="mp.margin.small">4dp</dimen>
+    <dimen name="mp.margin.normal">8dp</dimen>
+    <dimen name="mp.margin.large">16dp</dimen>
+    <dimen name="mp.margin.xlarge">24dp</dimen>
+
+    <dimen name="mp.text.list.title">14sp</dimen>
+    <dimen name="mp.text.list.hint">12sp</dimen>
+    <dimen name="mp.text.hint">12sp</dimen>
+
+    <dimen name="mp.list.itemHeight">54dp</dimen>
+    <dimen name="mp.list.scrollbarSize">4dp</dimen>
 </resources>

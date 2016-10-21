@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">MuiscPlayer</string>
+
+    <string name="mp.list.layoutManager.linear">LinearLayoutManager</string>
+
+    <!-- MainActivity/Fragment Titles -->
+    <string name="mp.fragment.title.play_list">Play List</string>
+    <string name="mp.fragment.title.music">Music</string>
+    <string name="mp.fragment.title.local_files">Local Files</string>
+    <string name="mp.fragment.title.settings">Settings</string>
+
+    <!-- Play Lists -->
+    <string name="mp.play_list.favorite">Favorite</string>
+    <string name="mp.play_list.footer.add">Add play list</string>
+    <string name="mp.play_list.footer.end_summary_formatter">%d play lists in total</string>
+
+    <!-- Main -->
+    <string-array name="mp_main_titles">
+        <item>@string/mp.fragment.title.play_list</item>
+        <item>@string/mp.fragment.title.music</item>
+        <item>@string/mp.fragment.title.local_files</item>
+        <item>@string/mp.fragment.title.settings</item>
+    </string-array>
+
+
+    <!-- Local Files -->
+    <string name="mp.local_files.segmented.all">All</string>
+    <string name="mp.local_files.segmented.folder">Folder</string>
+
+    <string name="mp.local_files.music_list.empty">No music found on this device</string>
+    <string name="mp.local_files.music_list.end_summary_formatter">%d songs in total</string>
+    <string name="mp.local_files.folder_list.end_summary_formatter">%d folders in total</string>
+    <string name="mp.local_files.folder_list.item_info_formatter" formatted="false">%d songs | %s</string>
+    <string name="mp.local_files.folder_list.add_folder">Add Folder</string>
+    >
 </resources>
