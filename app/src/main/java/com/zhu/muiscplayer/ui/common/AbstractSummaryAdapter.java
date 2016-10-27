@@ -25,7 +25,7 @@ import java.util.List;
 public abstract class AbstractSummaryAdapter<T , V extends IAdapterView> extends ListAdapter<T , V>{
 
     protected static final int VIEW_TYPE_ITEM = 1; //Normal list item
-    protected static final int VIEW_TYPE_EDN = 2; //END summary item ,e.g '2 items in total'
+    protected static final int VIEW_TYPE_END = 2; //END summary item ,e.g '2 items in total'
 
     private Context mContext;
 
@@ -69,7 +69,7 @@ public abstract class AbstractSummaryAdapter<T , V extends IAdapterView> extends
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_EDN){
+        if (viewType == VIEW_TYPE_END){
             View endSummaryView = getEndSummaryView();
             return new RecyclerView.ViewHolder(endSummaryView){};
         }
@@ -85,8 +85,9 @@ public abstract class AbstractSummaryAdapter<T , V extends IAdapterView> extends
 
     @Override
     public int getItemViewType(int position) {
-        if (hasEndSummary && position == getItemCount()){
-            return VIEW_TYPE_EDN;
+        //如果getItemCount()- 1避免数组越界异常
+        if (hasEndSummary && position == getItemCount() -1){
+            return VIEW_TYPE_END;
         }
         return VIEW_TYPE_ITEM;
     }
@@ -105,7 +106,7 @@ public abstract class AbstractSummaryAdapter<T , V extends IAdapterView> extends
 
     @Override
     public T getItem(int position) {
-        if (getItemViewType(position) == VIEW_TYPE_EDN){
+        if (getItemViewType(position) == VIEW_TYPE_END){
             return null;
         }
         return super.getItem(position);

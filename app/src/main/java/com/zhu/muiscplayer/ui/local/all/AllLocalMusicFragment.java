@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhu.muiscplayer.R;
@@ -18,16 +17,15 @@ import com.zhu.muiscplayer.data.model.Song;
 import com.zhu.muiscplayer.data.source.AppRepository;
 import com.zhu.muiscplayer.event.PlayListUpdatedEvent;
 import com.zhu.muiscplayer.event.PlaySongEvent;
-import com.zhu.muiscplayer.ui.widget.RecyclerViewFastScroller;
 import com.zhu.muiscplayer.ui.base.BaseFragment;
 import com.zhu.muiscplayer.ui.base.adapter.OnItemClickListener;
 import com.zhu.muiscplayer.ui.base.common.DefaultDividerDecoration;
+import com.zhu.muiscplayer.ui.widget.RecyclerViewFastScroller;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Optional;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -51,16 +49,17 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
     ProgressBar mProgressBar;
     @BindView(R.id.text_view_empty)
     View emptyView;
-
     LocalMusicAdapter mAdapter;
     LocalMusicContract.Presenter mPresenter;
+
+
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_local_music, container, false);
         mUnbinder = ButterKnife.bind(this, view);
-        Log.d("ZHUZHAOLIN" , "ZHUZHAOLIN");
         return view;
     }
 
@@ -82,9 +81,9 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
 
         mFastScroller.setRecyclerView(mRecyclerView);
 
-        new LocalMusicPresenter(AppRepository.getInstance() , this).subscribe();
-    }
 
+        new LocalMusicPresenter(AppRepository.getInstance(), this).subscribe();
+    }
 
 
     @Override
@@ -101,14 +100,15 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
                 }).subscribe();
     }
 
+
     @Override
     public void showProgress() {
-       mProgressBar.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-     mProgressBar.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
 
     @Override
     public void handleError(Throwable error) {
-        Toast.makeText(getActivity() , error.getMessage() , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -132,6 +132,7 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
     public void setPresenter(LocalMusicContract.Presenter presenter) {
         mPresenter = presenter;
     }
+
 
 
 }

@@ -17,7 +17,7 @@ import rx.Observable;
  * Desc:com.zhu.muiscplayerlib.data
  */
 
-public interface AppContract {
+ interface AppContract {
 
     //Play List
     Observable<List<PlayList>> playLists();

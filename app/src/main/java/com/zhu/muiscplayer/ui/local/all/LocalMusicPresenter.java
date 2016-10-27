@@ -1,12 +1,17 @@
 package com.zhu.muiscplayer.ui.local.all;
 
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
+
+
+
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 
 import com.zhu.muiscplayer.data.model.Song;
@@ -14,11 +19,10 @@ import com.zhu.muiscplayer.data.source.AppRepository;
 import com.zhu.muiscplayer.utils.FileUtils;
 
 import java.io.File;
+import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import rx.Observable;
@@ -75,6 +79,7 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
         mSubscription = new CompositeSubscription();
         mView = view;
         mView.setPresenter(this);
+
     }
     @Override
     public void subscribe() {
@@ -90,48 +95,61 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
     @Override
     public void loadLocalMusic() {
         mView.showProgress();
-        mView.getLoaderManager();
+        mView.getLoaderManager().initLoader(URL_LOAD_LOCAL_MUSIC , null , this);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
-        if (id != URL_LOAD_LOCAL_MUSIC) return null;
+
         return new CursorLoader(
                 mView.getContext() ,
                 MEDIA_URI ,
                 PROJECTIONS ,
-                null ,
+                WHERE ,
                 null,
-                ORDER_BY
+                MediaStore.Audio.Media.DISPLAY_NAME
         );
     }
 
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+
+        if (loader.getId() != URL_LOAD_LOCAL_MUSIC) return;
+
         Subscription subscription = Observable.just(cursor)
                 .flatMap(new Func1<Cursor, Observable<List<Song>>>() {
                     @Override
                     public Observable<List<Song>> call(Cursor cursor) {
-                        List<Song> songs = new ArrayList<Song>();
+                        List<Song> songs = new ArrayList<>();
                         if (cursor != null && cursor.getCount() > 0) {
                             cursor.moveToFirst();
                             do {
                                 Song song = cursorToMusic(cursor);
                                 songs.add(song);
                             }while (cursor.moveToNext());
+
                         }
+                        //关闭cursor
+                        cursor.close();
+
                         return mRepository.inSert(songs);
                     }
                 })
                 .doOnNext(new Action1<List<Song>>() {
                     @Override
                     public void call(List<Song> songs) {
-                        Collections.sort(songs, new Comparator<Song>() {
+                        final Collator collator = Collator.getInstance(java.util.Locale.CHINA);
+                         Collections.sort(songs, new Comparator<Song>() {
                             @Override
                             public int compare(Song left , Song right) {
-                                return left.getDisplayName().compareTo(right.getDisplayName());
+
+                                if (left.getDisplayName() == null || right.getDisplayName() == null){
+                                    return -1;
+                                }
+                                return collator.getCollationKey(left.getDisplayName())
+                                        .compareTo(collator.getCollationKey(right.getDisplayName()));
                             }
                         });
                     }
@@ -173,17 +191,22 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
 
 
     private Song cursorToMusic(Cursor cursor) {
-        String reakPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
-        File songFile = new File(reakPath);
-        Song song;
-        if (songFile.exists()) {
-            // Using song parsed from file to avoid encoding problems
-            song = FileUtils.fileToMusic(songFile);
-            if (song != null) {
-                return song;
-            }
+       Song song= getMusicDataFromMediaMetadataRetriever(cursor);
+        if (song != null) {
+            return song;
+        } else {
+            return getMusicDataFromCursor(cursor);
         }
-        song = new Song();
+    }
+
+    private Song getMusicDataFromMediaMetadataRetriever(Cursor cursor){
+//        String realPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
+        Song song = FileUtils.parseMuiscPath(cursor);
+        return  song;
+    }
+
+    private Song getMusicDataFromCursor(Cursor cursor){
+        Song song = new Song();
         song.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
         String displayName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME));
         if (displayName.endsWith(".mp3")) {

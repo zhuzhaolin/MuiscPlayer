@@ -45,7 +45,7 @@ public class RecyclerViewFastScroller extends LinearLayout {
     };
 
     public interface BubbleTextGetter{
-        String getTextToShowInBubble(int positon);
+        String getTextToShowInBubble(int position);
     }
 
     public RecyclerViewFastScroller(Context context) {
@@ -96,6 +96,7 @@ public class RecyclerViewFastScroller extends LinearLayout {
                    showBubble();
                 }
                 fastScroll.setSelected(true);
+                return true;
             case MotionEvent.ACTION_MOVE:
                 isDragging = true;
                 setBubbleAndHandlePosition(event.getY());

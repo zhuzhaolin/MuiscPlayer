@@ -1,6 +1,8 @@
 package com.zhu.muiscplayer.utils;
 
+import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
+import android.provider.MediaStore;
 
 import com.zhu.muiscplayer.data.model.Folder;
 import com.zhu.muiscplayer.data.model.Song;
@@ -37,7 +39,7 @@ public class FileUtils {
         }
         final String[] units = new String[]{"b", "kb", "M", "G", "T"};
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
-        return new DecimalFormat("# , ##0.##").format(size / Math.pow(1024 , digitGroups));
+        return new DecimalFormat("# , ##0.##").format(size / Math.pow(1024 , digitGroups))+"" + units[digitGroups];
     }
 
     public static boolean isMusic(File file){
@@ -86,6 +88,40 @@ public class FileUtils {
         String title = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
         String displayName = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
         String artist = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+        String album = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+        int duration = Integer.parseInt(
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+
+        if (duration == 0) return null;
+
+        Song song = new Song();
+        song.setTitle(title);
+        song.setDisplayName(displayName);
+        song.setArtist(artist);
+        song.setPath(file.getAbsolutePath());
+        song.setAlbum(album);
+        song.setDuration(duration);
+        song.setSize((int) file.length());
+        return song;
+    }
+
+    public static Song parseMuiscPath(Cursor cursor){
+        String realPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
+        File file = new File(realPath);
+        if (file.length() == 0) {
+            return null;
+        }
+        MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
+        metadataRetriever.setDataSource(file.getAbsolutePath());
+
+        String title = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+        String displayName = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+        //有些歌曲如果从MediaMetadataRetriever获取displayName为空的情况时，转为用一下方法获取
+        String artist = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+        if (displayName == null){
+            displayName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME));
+            artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
+        }
         String album = metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
         int duration = Integer.parseInt(
                 metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));

@@ -51,7 +51,7 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
                 }
             });
         }
-        if (mItemClickListener != null){
+        if (mItemLongClickListener!= null){
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -67,13 +67,11 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
         return holder;
     }
 
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         IAdapterView itemView = (V) holder.itemView;
         itemView.bind(getItem(position) , position);
     }
-
 
     @Override
     public int getItemCount() {
@@ -104,7 +102,7 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
         }
     }
 
-    public T getItem(int position){
+     protected T getItem(int position){
         return mData.get(position);
     }
 
@@ -114,20 +112,22 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
         }
     }
 
-
     public OnItemClickListener getItemClickListener() {
         return mItemClickListener;
     }
 
-    public OnItemLongClickListener getItemLongClickListener() {
-        return mItemLongClickListener;
+    public int getLastItemClickPosition() {
+        return mLastItemClickPosition;
     }
+
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         mItemClickListener = itemClickListener;
     }
+    public OnItemLongClickListener getItemLongClickListener() {
+        return mItemLongClickListener;
+    }
 
-
-    public void setItemLongClickListener(OnItemLongClickListener itemLongClickListener) {
+    public void setOnItemLongClickListener(OnItemLongClickListener itemLongClickListener) {
         mItemLongClickListener = itemLongClickListener;
     }
 }

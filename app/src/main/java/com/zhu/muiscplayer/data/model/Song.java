@@ -32,7 +32,7 @@ public class Song implements Parcelable{
 
     private String album;
 
-    @Unique
+//    @Unique
     private String path;
 
     private int duration;

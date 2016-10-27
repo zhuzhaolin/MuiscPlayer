@@ -53,17 +53,18 @@
             appCompat:srcCompat="@drawable/fast_scroller_indicator"/>
     </com.zhu.muiscplayer.ui.widget.RecyclerViewFastScroller>
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
 
-    <TextView
-        style="@style/MP.Theme.TextAppearance.List.Empty"
-        android:layout_centerInParent="true"
-        android:text="@string/mp.local_files.music_list.empty"
-        tools:visibility="visible"/>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            style="@style/MP.Theme.TextAppearance.List.Empty"
+            android:layout_centerInParent="true"
+            android:text="@string/mp.local_files.music_list.empty"
+            tools:visibility="visible"/>
 
 </RelativeLayout>

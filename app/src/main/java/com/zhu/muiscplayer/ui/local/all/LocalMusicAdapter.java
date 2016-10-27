@@ -22,14 +22,15 @@ public class LocalMusicAdapter extends AbstractSummaryAdapter<Song, LocalMusicIt
         implements RecyclerViewFastScroller.BubbleTextGetter {
 
     private Context mContext;
+
     public LocalMusicAdapter(Context context, List<Song> data) {
         super(context, data);
-       mContext = context;
+         mContext = context;
     }
 
     @Override
     protected String getEndSummaryText(int dataCount) {
-        return mContext.getString(R.string.mp_local_files_music_list_end_summary_formatter);
+        return mContext.getString(R.string.mp_local_files_music_list_end_summary_formatter , dataCount);
     }
 
     @Override
@@ -38,10 +39,10 @@ public class LocalMusicAdapter extends AbstractSummaryAdapter<Song, LocalMusicIt
     }
 
     @Override
-    public String getTextToShowInBubble(int positon) {
-        Song item = getItem(positon);
-        if (positon > 0 && item == null){
-            item = getItem(positon - 1);
+    public String getTextToShowInBubble(int position) {
+        Song item = getItem(position);
+        if (position > 0 && item == null){
+            item = getItem(position - 1);
         }
         return item.getDisplayName().substring(0, 1);
     }

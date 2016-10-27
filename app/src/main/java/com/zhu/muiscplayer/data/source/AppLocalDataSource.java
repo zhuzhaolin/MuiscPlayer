@@ -129,7 +129,7 @@ public class AppLocalDataSource implements AppContract {
                     PreferenceManager.reportFirstQueryFolders(mContext);
                 }
                 List<Folder> folders = mLiteOrm.query(
-                        QueryBuilder.create(Folder.class));
+                        QueryBuilder.create(Folder.class).appendOrderAscBy(Folder.COLUMN_NAME));
                 subscriber.onNext(folders);
                 subscriber.onCompleted();
             }
@@ -247,7 +247,7 @@ public class AppLocalDataSource implements AppContract {
             @Override
             public void call(Subscriber<? super Song> subscriber) {
                 List<PlayList> playLists = mLiteOrm.query(
-                        QueryBuilder.create(PlayList.class));
+                        QueryBuilder.create(PlayList.class).whereEquals(PlayList.COLUMN_FAVORITE , String.valueOf(true)));
                 if (playLists.isEmpty()) {
                     PlayList defaultFavorite = DBUtils.generateFavoritePlayList(mContext);
                     playLists.add(defaultFavorite);

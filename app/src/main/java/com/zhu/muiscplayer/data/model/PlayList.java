@@ -202,13 +202,13 @@ public class PlayList implements Parcelable{
     }
 
     public void addSong(@NonNull Song song) {
-        if (song == null) return;
+//        if (song == null) return;
         songs.add(song);
         numOfSongs = songs.size();
     }
 
     public void addSong(@Nullable Song song, int index) {
-        if (song == null) return;
+//        if (song == null) return;
         songs.add(index , song);
         numOfSongs = songs.size();
     }
@@ -243,7 +243,6 @@ public class PlayList implements Parcelable{
 
     /**
      * Prepare to play
-     * @return
      */
     public boolean prepare(){
         if (songs.isEmpty()) return false;
