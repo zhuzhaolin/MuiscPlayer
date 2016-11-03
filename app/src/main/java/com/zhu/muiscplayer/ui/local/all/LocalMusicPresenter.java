@@ -145,11 +145,11 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
                             @Override
                             public int compare(Song left , Song right) {
 
-                                if (left.getDisplayName() == null || right.getDisplayName() == null){
+                                if (left.getArtist() == null || right.getArtist() == null){
                                     return -1;
                                 }
-                                return collator.getCollationKey(left.getDisplayName())
-                                        .compareTo(collator.getCollationKey(right.getDisplayName()));
+                                return collator.getCollationKey(left.getArtist())
+                                        .compareTo(collator.getCollationKey(right.getArtist()));
                             }
                         });
                     }

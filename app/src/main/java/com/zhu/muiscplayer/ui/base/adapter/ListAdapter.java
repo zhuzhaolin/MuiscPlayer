@@ -102,7 +102,7 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
         }
     }
 
-     protected T getItem(int position){
+     public T getItem(int position){
         return mData.get(position);
     }
 

@@ -175,24 +175,25 @@ public class PlaybackService extends Service implements IPlayback , IPlayback.Ca
         super.onDestroy();
     }
 
+    // Playback Callbacks
     @Override
     public void onSwitchLast(@Nullable Song last) {
-
+        showNotification();
     }
 
     @Override
     public void onSwitchNext(@Nullable Song next) {
-
+        showNotification();
     }
 
     @Override
     public void onComplete(@NonNull Song next) {
-
+        showNotification();
     }
 
     @Override
     public void onPlayStatusChanged(boolean isPlaying) {
-
+         showNotification();
     }
 
     /**
@@ -207,6 +208,7 @@ public class PlaybackService extends Service implements IPlayback , IPlayback.Ca
         Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_notification_app_logo)
                 .setWhen(System.currentTimeMillis())
+                .setContentIntent(contentIntent)
                 .setCustomContentView(getSmallContentView())
                 .setCustomBigContentView(getBigContentView())
                 .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -231,29 +233,12 @@ public class PlaybackService extends Service implements IPlayback , IPlayback.Ca
     private RemoteViews getBigContentView() {
         if (mContentViewBig == null) {
             mContentViewBig = new RemoteViews(getPackageName() , R.layout.remote_view_music_player);
+//            mContentViewBig.setInt(R.id.layout_root , "setBackgroundColor" , 0);
             setUpRemoteView(mContentViewBig);
         }
         updateRemoteViews(mContentViewBig);
         return mContentViewBig;
     }
-
-    private void updateRemoteViews(RemoteViews remoteView) {
-        Song currentSong = mPlayer.getPlayingSong();
-        if (currentSong != null) {
-            remoteView.setTextViewText(R.id.text_view_name , currentSong.getDisplayName());
-            remoteView.setTextViewText(R.id.text_view_artist , currentSong.getArtist());
-        }
-
-        remoteView.setImageViewResource(R.id.image_view_paly_toggle,
-                isPlaying() ? R.drawable.ic_remote_view_pause : R.drawable.ic_remote_view_play);
-        Bitmap album = AlbumUtils.parseAlbum(getPlayingSong());
-        if (album == null) {
-            remoteView.setImageViewResource(R.id.image_view_album, R.mipmap.ic_launcher);
-        } else {
-            remoteView.setImageViewBitmap(R.id.image_view_album , album);
-        }
-    }
-
 
     private void setUpRemoteView(RemoteViews remoteView) {
         remoteView.setImageViewResource(R.id.image_view_close, R.drawable.ic_remote_view_close);
@@ -264,6 +249,24 @@ public class PlaybackService extends Service implements IPlayback , IPlayback.Ca
         remoteView.setOnClickPendingIntent(R.id.button_play_last, getPendingIntent(ACTION_PLAY_LAST));
         remoteView.setOnClickPendingIntent(R.id.button_play_next, getPendingIntent(ACTION_PLAY_NEXT));
         remoteView.setOnClickPendingIntent(R.id.button_play_toggle, getPendingIntent(ACTION_PLAY_TOGGLE));
+    }
+
+
+    private void updateRemoteViews(RemoteViews remoteView) {
+        Song currentSong = mPlayer.getPlayingSong();
+        if (currentSong != null) {
+            remoteView.setTextViewText(R.id.text_view_name , currentSong.getDisplayName());
+            remoteView.setTextViewText(R.id.text_view_artist , currentSong.getArtist());
+        }
+
+        remoteView.setImageViewResource(R.id.image_view_play_toggle,
+                isPlaying() ? R.drawable.ic_remote_view_pause : R.drawable.ic_remote_view_play);
+        Bitmap album = AlbumUtils.parseAlbum(getPlayingSong());
+        if (album == null) {
+            remoteView.setImageViewResource(R.id.image_view_album, R.mipmap.muisc);
+        } else {
+            remoteView.setImageViewBitmap(R.id.image_view_album , album);
+        }
     }
 
 

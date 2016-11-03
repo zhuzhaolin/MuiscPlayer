@@ -113,7 +113,7 @@ public class MusicPlayerPresenter implements MusicPlayerContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                       mView.handleError(e);
                     }
 
                     @Override

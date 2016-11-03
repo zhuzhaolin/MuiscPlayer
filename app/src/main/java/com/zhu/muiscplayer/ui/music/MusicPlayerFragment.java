@@ -101,11 +101,12 @@ public class MusicPlayerFragment extends BaseFragment
         }
     };
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_music, container, false);
-       mUnbinder =  ButterKnife.bind(this, view);
+        mUnbinder =  ButterKnife.bind(this, view);
         return view;
     }
 
@@ -139,14 +140,7 @@ public class MusicPlayerFragment extends BaseFragment
         new MusicPlayerPresenter(getActivity() , AppRepository.getInstance() ,this).subscribe();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mPlayer != null && mPlayer.isPlaying()) {
-            mHandler.removeCallbacks(mProgressCallback);
-            mHandler.post(mProgressCallback);
-        }
-    }
+
 
     @Override
     public void onStop() {
@@ -237,7 +231,6 @@ public class MusicPlayerFragment extends BaseFragment
     }
 
     //Music Controals
-
     private void playSong(Song song) {
         PlayList playList = new PlayList(song);
         playSong(playList , 0);

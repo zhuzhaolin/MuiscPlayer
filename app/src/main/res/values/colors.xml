@@ -8,7 +8,9 @@
 
 
     <!-- Theme - Dark Blue -->
-    <color name="mp.theme.dark_blue.background">#3C5F78</color>
+    <color name="mp.theme.dark_blue.background">#8B4726</color>
+    <!--<color name="mp.theme.dark_blue.background">#3C5F78</color>-->
+
     <color name="mp.theme.dark_blue.gradientColor">#507E9F</color>
     <color name="mp.theme.dark_blue.colorControlActivated">#7AFFFFFF</color>
     <color name="mp.theme.dark_blue.colorControlHighlight">#7AFFFFFF</color>

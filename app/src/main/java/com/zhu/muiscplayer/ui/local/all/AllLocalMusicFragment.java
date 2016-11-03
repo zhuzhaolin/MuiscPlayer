@@ -4,7 +4,6 @@ package com.zhu.muiscplayer.ui.local.all;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,9 @@ import com.zhu.muiscplayer.event.PlayListUpdatedEvent;
 import com.zhu.muiscplayer.event.PlaySongEvent;
 import com.zhu.muiscplayer.ui.base.BaseFragment;
 import com.zhu.muiscplayer.ui.base.adapter.OnItemClickListener;
-import com.zhu.muiscplayer.ui.base.common.DefaultDividerDecoration;
+import com.zhu.muiscplayer.ui.common.DefaultDividerDecoration;
 import com.zhu.muiscplayer.ui.widget.RecyclerViewFastScroller;
+import com.zhu.muiscplayer.utils.LoggerUtil;
 
 import java.util.List;
 
@@ -73,6 +73,7 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
             public void onItemClick(int position) {
                 Song song = mAdapter.getItem(position);
                 RxBus.getInstance().post(new PlaySongEvent(song));
+                LoggerUtil.d("SONGNAME" ,song.getDisplayName() );
             }
         });
 

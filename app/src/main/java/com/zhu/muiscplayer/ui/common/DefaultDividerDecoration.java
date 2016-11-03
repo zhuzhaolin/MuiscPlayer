@@ -1,4 +1,4 @@
-package com.zhu.muiscplayer.ui.base.common;
+package com.zhu.muiscplayer.ui.common;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

@@ -19,8 +19,7 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".player.PlaybackService">
+        <service android:name=".player.PlaybackService">
             <intent-filter>
                 <action android:name="io.github.ryanhoo.music.ACTION.PLAY_TOGGLE"/>
                 <action android:name="io.github.ryanhoo.music.ACTION.PLAY_NEXT"/>
@@ -28,6 +27,11 @@
                 <action android:name="io.github.ryanhoo.music.ACTION.STOP_SERVICE"/>
             </intent-filter>
         </service>
+
+        <activity android:name=".ui.details.PlayListDetailsActivity">
+        </activity>
+        <activity android:name=".ui.local.filesystem.FileSystemActivity">
+        </activity>
     </application>
 
 </manifest>

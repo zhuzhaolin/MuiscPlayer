@@ -15,7 +15,7 @@ public class PlayListNowEvent {
     public PlayList playList;
     public int playIndex;
 
-    public PlayListNowEvent(int playIndex, PlayList playList) {
+    public PlayListNowEvent(PlayList playList,int playIndex ) {
         this.playIndex = playIndex;
         this.playList = playList;
     }

@@ -6,7 +6,6 @@
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    tools:background="#FFFFFF"
     tools:layout_height="60dp">
 
     <ImageView
@@ -41,8 +40,8 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/image_view_album"
-        android:layout_toEndOf="@id/image_view_album"
+        android:layout_toRightOf="@+id/image_view_album"
+        android:layout_toEndOf="@+id/image_view_album"
         android:layout_toLeftOf="@+id/layout_play_controls"
         android:layout_toStartOf="@+id/layout_play_controls"
         android:layout_centerVertical="true">
@@ -87,7 +86,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_remote_view_play_last"/>
+                app:srcCompat="@drawable/ic_remote_view_play_last"
+                android:layout_gravity="center"/>
         </FrameLayout>
         
         <FrameLayout
@@ -98,11 +98,12 @@
             android:background="@drawable/selector_remote_views_action_background">
 
             <ImageView
-                android:id="@+id/image_view_paly_toggle"
+                android:id="@+id/image_view_play_toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="center"
-                app:srcCompat="@drawable/ic_remote_view_play"/>
+                app:srcCompat="@drawable/ic_remote_view_play"
+                android:layout_gravity="center"/>
         </FrameLayout>
 
         <FrameLayout
@@ -110,7 +111,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:clickable="true"
-            android:background="@drawable/selector_remote_views_action_background">
+            android:background="@drawable/selector_remote_views_action_background"
+            >
 
             <ImageView
                 android:id="@+id/image_view_play_next"
